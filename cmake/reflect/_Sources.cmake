@@ -11,12 +11,18 @@ endif()
 # contents selected with patternfile ??-source--sources
 #
 set( SOURCES
-src/MulleObjCOSFoundation.m
+src/NSBundle+Darwin.m
+src/NSDateFormatter+Darwin.m
+src/NSFileManager+Darwin.m
+src/NSPathUtilities+Darwin.m
+src/NSProcessInfo+Darwin.m
+src/NSString+Darwin.m
+src/NSTask+Darwin.m
 )
 
 #
 # contents selected with patternfile ??-source--stage2-sources
 #
 set( STAGE2_SOURCES
-src/MulleObjCDeps+MulleObjCOSFoundation.m
+src/MulleObjCDeps+MulleObjCDarwinFoundation.m
 )
