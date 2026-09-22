@@ -5,7 +5,7 @@
 #
 # Disable generation of this file with:
 #
-# mulle-sde environment set MULLE_SOURCETREE_TO_CMAKE_DEPENDENCIES_FILE DISABLE
+# mulle-sde environment --global set MULLE_SOURCETREE_TO_CMAKE_DEPENDENCIES_FILE DISABLE
 #
 if( MULLE_TRACE_INCLUDE)
    message( STATUS "# Include \"${CMAKE_CURRENT_LIST_FILE}\"" )
@@ -27,7 +27,7 @@ else()
 endif()
 
 #
-# Generated from sourcetree: 3F9A6E2C-B306-4384-9FC9-A0FBBC5961AD;MulleObjCBSDFoundation;no-singlephase;
+# Generated from sourcetree: 3F9A6E2C-B306-4384-9FC9-A0FBBC5961AD;MulleObjCBSDFoundation;no-header,no-singlephase;
 # Disable with : `mulle-sourcetree mark MulleObjCBSDFoundation no-link`
 # Disable for this platform: `mulle-sourcetree mark MulleObjCBSDFoundation no-cmake-platform-${MULLE_UNAME}`
 # Disable for a sdk: `mulle-sourcetree mark MulleObjCBSDFoundation no-cmake-sdk-<name>`
@@ -51,7 +51,7 @@ else()
             MulleObjCBSDFoundation
             NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_FIND_ROOT_PATH
          )
-         if( NOT MULLE_OBJC_BSD_FOUNDATION_LIBRARY AND NOT DEPENDENCY_IGNORE_SYSTEM_LIBARIES)
+         if( NOT MULLE_OBJC_BSD_FOUNDATION_LIBRARY AND NOT DEPENDENCY_IGNORE_SYSTEM_LIBRARIES)
             find_library( MULLE_OBJC_BSD_FOUNDATION_LIBRARY NAMES
                ${MULLE_PREFERRED_LIBRARY_PREFIX}MulleObjCBSDFoundation${CMAKE_DEBUG_POSTFIX}${MULLE_PREFERRED_LIBRARY_SUFFIX}
                ${MULLE_PREFERRED_LIBRARY_PREFIX}MulleObjCBSDFoundation${MULLE_PREFERRED_LIBRARY_SUFFIX}
@@ -162,7 +162,7 @@ else()
             MulleObjCPosixFoundation
             NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_FIND_ROOT_PATH
          )
-         if( NOT MULLE_OBJC_POSIX_FOUNDATION_LIBRARY AND NOT DEPENDENCY_IGNORE_SYSTEM_LIBARIES)
+         if( NOT MULLE_OBJC_POSIX_FOUNDATION_LIBRARY AND NOT DEPENDENCY_IGNORE_SYSTEM_LIBRARIES)
             find_library( MULLE_OBJC_POSIX_FOUNDATION_LIBRARY NAMES
                ${MULLE_PREFERRED_LIBRARY_PREFIX}MulleObjCPosixFoundation${CMAKE_DEBUG_POSTFIX}${MULLE_PREFERRED_LIBRARY_SUFFIX}
                ${MULLE_PREFERRED_LIBRARY_PREFIX}MulleObjCPosixFoundation${MULLE_PREFERRED_LIBRARY_SUFFIX}

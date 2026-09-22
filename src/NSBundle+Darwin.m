@@ -62,6 +62,13 @@
 - (NSString *) _posixResourcePath;
 - (NSString *) _loadFailureReason;
 
+- (NSString *) _posixBuiltInPlugInsPath;
+- (NSString *) _posixPathForAuxiliaryExecutable:(NSString *) executableName;
+- (NSString *) _posixPrivateFrameworksPath;
+- (NSString *) _posixSharedFrameworksPath;
+- (NSString *) _posixSharedSupportPath;
+- (NSString *) _posixExecutablePath;
+
 @end
 
 
@@ -126,9 +133,75 @@ static NSString   *resourcesPath( NSBundle *self)
 }
 
 
+//
+// A "true" macOS bundle (.app/.framework) has a "Contents" directory.
+// Bundles created POSIX-style (e.g. <root>/bin + <root>/share) do not.
+// When there is no "Contents" directory we fall back to the POSIX layout,
+// so that cross-platform code gets consistent answers on Darwin too.
+//
+static BOOL   hasContents( NSBundle *self)
+{
+   NSFileManager   *manager;
+   BOOL            isDir;
+
+   manager = [NSFileManager defaultManager];
+   return( [manager fileExistsAtPath:contentsPath( self)
+                         isDirectory:&isDir] && isDir);
+}
+
+
 - (NSString *) builtInPlugInsPath
 {
-   return( [resourcesPath(self) stringByAppendingPathComponent:@"PlugIns"]);
+   NSFileManager   *manager;
+   NSString        *path;
+   BOOL            isDir;
+
+   if( ! hasContents( self))
+      return( [self _posixBuiltInPlugInsPath]);
+
+   path    = [resourcesPath( self) stringByAppendingPathComponent:@"PlugIns"];
+   manager = [NSFileManager defaultManager];
+   if( [manager fileExistsAtPath:path
+                     isDirectory:&isDir] && isDir)
+      return( path);
+   return( nil);
+}
+
+
+- (NSString *) pathForAuxiliaryExecutable:(NSString *) executableName
+{
+   NSString   *path;
+
+   if( ! hasContents( self))
+      return( [self _posixPathForAuxiliaryExecutable:executableName]);
+
+   path = contentsPath( self);
+   path = [path stringByAppendingPathComponent:[NSBundle _OSIdentifier]];
+   return( [path stringByAppendingPathComponent:executableName]);
+}
+
+
+- (NSString *) privateFrameworksPath
+{
+   if( ! hasContents( self))
+      return( [self _posixPrivateFrameworksPath]);
+   return( [contentsPath( self) stringByAppendingPathComponent:@"Frameworks"]);
+}
+
+
+- (NSString *) sharedFrameworksPath
+{
+   if( ! hasContents( self))
+      return( [self _posixSharedFrameworksPath]);
+   return( [contentsPath( self) stringByAppendingPathComponent:@"SharedFrameworks"]);
+}
+
+
+- (NSString *) sharedSupportPath
+{
+   if( ! hasContents( self))
+      return( [self _posixSharedSupportPath]);
+   return( [contentsPath( self) stringByAppendingPathComponent:@"SharedSupport"]);
 }
 
 
@@ -191,6 +264,14 @@ static NSString   *resourcesPath( NSBundle *self)
    NSString        *contents;
    NSString        *exe;
    NSFileManager   *manager;
+
+   //
+   // If this is not a macOS "Contents" style bundle, use the POSIX layout.
+   // This covers plain executables and POSIX-style bundles, so that
+   // cross-platform code gets consistent answers on Darwin too.
+   //
+   if( ! hasContents( self))
+      return( [self _posixExecutablePath]);
 
    //
    // this can only work on Darwin
