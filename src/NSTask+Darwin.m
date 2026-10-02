@@ -40,18 +40,18 @@
 
 // other libraries of MulleObjCPosixFoundation
 
-// std-c and dependencies
-#include <crt_externs.h>
 
 
 @implementation NSTask( Darwin)
 
 @dependency NSTask( BSD);
 
-
-+ (char **) _environment
-{
-   return( *_NSGetEnviron());
-}
+//
+// process control is implemented generically in NSTask( Posix). The child's
+// environment is one of the things a launch is now told (options.env of
+// mulle-spawn), so the `+_environment` that reached Darwin's environment
+// through `_NSGetEnviron()` -- and the <crt_externs.h> that came with it -- is
+// gone. mulle-spawn does that lookup itself now.
+//
 
 @end
