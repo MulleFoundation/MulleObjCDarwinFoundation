@@ -3,7 +3,7 @@
    "version" : "0.29.0",
    "description" : "This is a [mulle-sde](https://mulle-sde.github.io/) project.",
    "keywords" : [],
-   "license" : "UNLICENSED",
+   "license" : "BSD-3-Clause",
    "repo" : "MulleFoundation/MulleObjCDarwinFoundation",
    "src" : [
       "src/generic/import-private.h",
@@ -27,7 +27,7 @@
       "src/reflect/_MulleObjCDarwinFoundation-provide.h"
    ],
    "dependencies" : {
-      "OS-Split/MulleObjCBSDFoundation": "*",
-      "OS-Split/MulleObjCPosixFoundation": "*"
+      "MulleFoundation/MulleObjCBSDFoundation": "*",
+      "MulleFoundation/MulleObjCPosixFoundation": "*"
    }
 }
